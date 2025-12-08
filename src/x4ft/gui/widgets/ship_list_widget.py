@@ -31,9 +31,9 @@ class ShipListWidget(QWidget):
 
         # Search box
         search_layout = QHBoxLayout()
-        search_label = QLabel("Buscar:")
+        search_label = QLabel("Search:")
         self.search_edit = QLineEdit()
-        self.search_edit.setPlaceholderText("Nombre de nave...")
+        self.search_edit.setPlaceholderText("Ship name...")
         self.search_edit.textChanged.connect(self._filter_ships)
         search_layout.addWidget(search_label)
         search_layout.addWidget(self.search_edit)
@@ -41,9 +41,9 @@ class ShipListWidget(QWidget):
 
         # Size filter
         size_layout = QHBoxLayout()
-        size_label = QLabel("Tamaño:")
+        size_label = QLabel("Size:")
         self.size_combo = QComboBox()
-        self.size_combo.addItems(["Todos", "XS", "S", "M", "L", "XL"])
+        self.size_combo.addItems(["All", "XS", "S", "M", "L", "XL"])
         self.size_combo.currentTextChanged.connect(self._filter_ships)
         size_layout.addWidget(size_label)
         size_layout.addWidget(self.size_combo)
@@ -51,9 +51,9 @@ class ShipListWidget(QWidget):
 
         # Type filter
         type_layout = QHBoxLayout()
-        type_label = QLabel("Tipo:")
+        type_label = QLabel("Type:")
         self.type_combo = QComboBox()
-        self.type_combo.addItem("Todos")
+        self.type_combo.addItem("All")
         self.type_combo.currentTextChanged.connect(self._filter_ships)
         type_layout.addWidget(type_label)
         type_layout.addWidget(self.type_combo)
@@ -96,10 +96,10 @@ class ShipListWidget(QWidget):
             if search_text and search_text not in ship.name.lower():
                 continue
 
-            if size_filter != "Todos" and ship.size.upper() != size_filter:
+            if size_filter != "All" and ship.size.upper() != size_filter:
                 continue
 
-            if type_filter != "Todos":
+            if type_filter != "All":
                 if not ship.ship_type or ship.ship_type.title() != type_filter:
                     continue
 

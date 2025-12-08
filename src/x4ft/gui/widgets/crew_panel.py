@@ -23,12 +23,12 @@ class CrewPanel(QWidget):
         """Initialize UI."""
         layout = QVBoxLayout(self)
 
-        group = QGroupBox("Tripulación")
+        group = QGroupBox("Crew")
         group_layout = QVBoxLayout()
 
         # Level selector
         level_layout = QHBoxLayout()
-        level_layout.addWidget(QLabel("Nivel de Habilidad:"))
+        level_layout.addWidget(QLabel("Skill Level:"))
 
         self.level_combo = QComboBox()
         self.level_combo.currentIndexChanged.connect(self._on_level_changed)
@@ -50,7 +50,7 @@ class CrewPanel(QWidget):
             self.crew_types = self.session.query(CrewType).order_by(CrewType.skill_level).all()
 
             for crew in self.crew_types:
-                label = f"{crew.skill_level}  - {crew.name}"
+                label = f"{crew.skill_level}  - {crew.name}"
                 self.level_combo.addItem(label, crew.skill_level)
 
             # Select first item
@@ -58,7 +58,7 @@ class CrewPanel(QWidget):
                 self._update_info(0)
 
         except Exception as e:
-            self.level_combo.addItem("0  - Sin tripulación", 0)
+            self.level_combo.addItem("0  - No crew", 0)
 
     def _on_level_changed(self, index: int):
         """Handle level selection change."""
@@ -72,12 +72,12 @@ class CrewPanel(QWidget):
         crew = next((c for c in self.crew_types if c.skill_level == level), None)
         if crew:
             bonus = crew.efficiency_bonus or 0
-            info = f"<b>Bonus de Eficiencia:</b> +{bonus:.0f}%<br>"
+            info = f"<b>Efficiency Bonus:</b> +{bonus:.0f}%<br>"
             if crew.description:
                 info += f"<i>{crew.description}</i>"
             self.info_label.setText(info)
         else:
-            self.info_label.setText("Sin bonificaciones")
+            self.info_label.setText("No bonuses")
 
     def set_level(self, level: int):
         """Set crew level programmatically."""

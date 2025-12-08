@@ -41,7 +41,7 @@ class FittingMainWidget(QWidget):
 
         # Ships tab
         self.ship_list = ShipListWidget(self.session)
-        sidebar_tabs.addTab(self.ship_list, "Naves")
+        sidebar_tabs.addTab(self.ship_list, "Ships")
 
         # Builds tab (placeholder for now)
         builds_widget = QWidget()

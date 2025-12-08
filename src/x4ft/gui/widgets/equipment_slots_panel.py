@@ -35,7 +35,7 @@ class EquipmentSlotsPanel(QWidget):
         self.container = QWidget()
         self.main_layout = QVBoxLayout(self.container)
 
-        self.empty_label = QLabel("Selecciona una nave para ver sus slots de equipamiento")
+        self.empty_label = QLabel("Select a ship to view its equipment slots")
         self.main_layout.addWidget(self.empty_label)
         self.main_layout.addStretch()
 
@@ -60,7 +60,7 @@ class EquipmentSlotsPanel(QWidget):
                 item.widget().deleteLater()
 
         if not ship or not ship.slots:
-            self.empty_label = QLabel("Esta nave no tiene slots de equipamiento")
+            self.empty_label = QLabel("This ship has no equipment slots")
             self.main_layout.addWidget(self.empty_label)
             self.main_layout.addStretch()
             return
@@ -75,11 +75,11 @@ class EquipmentSlotsPanel(QWidget):
 
         # Create groups
         type_names = {
-            'weapon': 'Armas',
-            'turret': 'Torretas',
-            'shield': 'Escudos',
-            'engine': 'Motor',
-            'thruster': 'Propulsores'
+            'weapon': 'Weapons',
+            'turret': 'Turrets',
+            'shield': 'Shields',
+            'engine': 'Engine',
+            'thruster': 'Thrusters'
         }
 
         for slot_type in ['weapon', 'turret', 'shield', 'engine', 'thruster']:
@@ -108,7 +108,7 @@ class EquipmentSlotsPanel(QWidget):
         for slot in sorted(slots, key=lambda s: s.slot_index or 0):
             # Create combo box for this slot
             combo = QComboBox()
-            combo.addItem("(Vacío)", None)
+            combo.addItem("(Empty)", None)
 
             # Load compatible equipment
             compatible_equipment = self._get_compatible_equipment(slot)
@@ -208,4 +208,4 @@ class EquipmentSlotsPanel(QWidget):
     def clear(self):
         """Clear all equipment selections."""
         for combo in self.slot_combos.values():
-            combo.setCurrentIndex(0)  # Set to "(Vacío)"
+            combo.setCurrentIndex(0)  # Set to "(Empty)"

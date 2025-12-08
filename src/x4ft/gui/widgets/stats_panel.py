@@ -56,26 +56,26 @@ class StatsPanel(QWidget):
 
     def _create_defense_group(self) -> QGroupBox:
         """Create defense statistics group."""
-        group = QGroupBox("Defensa")
+        group = QGroupBox("Defense")
         layout = QGridLayout()
 
         # Hull
-        layout.addWidget(QLabel("<b>Casco:</b>"), 0, 0)
+        layout.addWidget(QLabel("<b>Hull:</b>"), 0, 0)
         self.hull_label = QLabel("0")
         layout.addWidget(self.hull_label, 0, 1)
 
         # Shield capacity
-        layout.addWidget(QLabel("<b>Capacidad Escudo:</b>"), 1, 0)
+        layout.addWidget(QLabel("<b>Shield Capacity:</b>"), 1, 0)
         self.shield_capacity_label = QLabel("0 MJ")
         layout.addWidget(self.shield_capacity_label, 1, 1)
 
         # Shield recharge
-        layout.addWidget(QLabel("<b>Recarga Escudo:</b>"), 2, 0)
+        layout.addWidget(QLabel("<b>Shield Recharge:</b>"), 2, 0)
         self.shield_recharge_label = QLabel("0 MJ/s")
         layout.addWidget(self.shield_recharge_label, 2, 1)
 
         # Shield delay
-        layout.addWidget(QLabel("<b>Delay Recarga:</b>"), 3, 0)
+        layout.addWidget(QLabel("<b>Recharge Delay:</b>"), 3, 0)
         self.shield_delay_label = QLabel("0 s")
         layout.addWidget(self.shield_delay_label, 3, 1)
 
@@ -84,31 +84,31 @@ class StatsPanel(QWidget):
 
     def _create_propulsion_group(self) -> QGroupBox:
         """Create propulsion statistics group."""
-        group = QGroupBox("Propulsión")
+        group = QGroupBox("Propulsion")
         layout = QGridLayout()
 
         # Velocity
-        layout.addWidget(QLabel("<b>Velocidad:</b>"), 0, 0)
+        layout.addWidget(QLabel("<b>Velocity:</b>"), 0, 0)
         self.velocity_label = QLabel("0 m/s")
         layout.addWidget(self.velocity_label, 0, 1)
 
         # Boost velocity
-        layout.addWidget(QLabel("<b>Velocidad Boost:</b>"), 1, 0)
+        layout.addWidget(QLabel("<b>Boost Velocity:</b>"), 1, 0)
         self.boost_velocity_label = QLabel("0 m/s")
         layout.addWidget(self.boost_velocity_label, 1, 1)
 
         # Travel velocity
-        layout.addWidget(QLabel("<b>Velocidad Crucero:</b>"), 2, 0)
+        layout.addWidget(QLabel("<b>Travel Velocity:</b>"), 2, 0)
         self.travel_velocity_label = QLabel("0 m/s")
         layout.addWidget(self.travel_velocity_label, 2, 1)
 
         # Forward thrust
-        layout.addWidget(QLabel("<b>Empuje Adelante:</b>"), 3, 0)
+        layout.addWidget(QLabel("<b>Forward Thrust:</b>"), 3, 0)
         self.forward_thrust_label = QLabel("0 N")
         layout.addWidget(self.forward_thrust_label, 3, 1)
 
         # Strafe thrust
-        layout.addWidget(QLabel("<b>Empuje Lateral:</b>"), 4, 0)
+        layout.addWidget(QLabel("<b>Strafe Thrust:</b>"), 4, 0)
         self.strafe_thrust_label = QLabel("0 N")
         layout.addWidget(self.strafe_thrust_label, 4, 1)
 
@@ -117,26 +117,26 @@ class StatsPanel(QWidget):
 
     def _create_armament_group(self) -> QGroupBox:
         """Create armament statistics group."""
-        group = QGroupBox("Armamento")
+        group = QGroupBox("Armament")
         layout = QGridLayout()
 
         # DPS hull
-        layout.addWidget(QLabel("<b>DPS Casco:</b>"), 0, 0)
+        layout.addWidget(QLabel("<b>Hull DPS:</b>"), 0, 0)
         self.dps_hull_label = QLabel("0")
         layout.addWidget(self.dps_hull_label, 0, 1)
 
         # DPS shield
-        layout.addWidget(QLabel("<b>DPS Escudo:</b>"), 1, 0)
+        layout.addWidget(QLabel("<b>Shield DPS:</b>"), 1, 0)
         self.dps_shield_label = QLabel("0")
         layout.addWidget(self.dps_shield_label, 1, 1)
 
         # Weapon count
-        layout.addWidget(QLabel("<b>Armas:</b>"), 2, 0)
+        layout.addWidget(QLabel("<b>Weapons:</b>"), 2, 0)
         self.weapon_count_label = QLabel("0")
         layout.addWidget(self.weapon_count_label, 2, 1)
 
         # Turret count
-        layout.addWidget(QLabel("<b>Torretas:</b>"), 3, 0)
+        layout.addWidget(QLabel("<b>Turrets:</b>"), 3, 0)
         self.turret_count_label = QLabel("0")
         layout.addWidget(self.turret_count_label, 3, 1)
 
@@ -145,16 +145,16 @@ class StatsPanel(QWidget):
 
     def _create_storage_group(self) -> QGroupBox:
         """Create storage statistics group."""
-        group = QGroupBox("Almacenamiento")
+        group = QGroupBox("Storage")
         layout = QGridLayout()
 
         # Cargo
-        layout.addWidget(QLabel("<b>Carga:</b>"), 0, 0)
+        layout.addWidget(QLabel("<b>Cargo:</b>"), 0, 0)
         self.cargo_label = QLabel("0")
         layout.addWidget(self.cargo_label, 0, 1)
 
         # Missiles
-        layout.addWidget(QLabel("<b>Misiles:</b>"), 1, 0)
+        layout.addWidget(QLabel("<b>Missiles:</b>"), 1, 0)
         self.missile_storage_label = QLabel("0")
         layout.addWidget(self.missile_storage_label, 1, 1)
 
@@ -164,7 +164,7 @@ class StatsPanel(QWidget):
         layout.addWidget(self.drone_storage_label, 2, 1)
 
         # Units
-        layout.addWidget(QLabel("<b>Unidades:</b>"), 3, 0)
+        layout.addWidget(QLabel("<b>Units:</b>"), 3, 0)
         self.unit_storage_label = QLabel("0")
         layout.addWidget(self.unit_storage_label, 3, 1)
 
@@ -173,21 +173,21 @@ class StatsPanel(QWidget):
 
     def _create_crew_group(self) -> QGroupBox:
         """Create crew statistics group."""
-        group = QGroupBox("Tripulación")
+        group = QGroupBox("Crew")
         layout = QGridLayout()
 
         # Capacity
-        layout.addWidget(QLabel("<b>Capacidad:</b>"), 0, 0)
+        layout.addWidget(QLabel("<b>Capacity:</b>"), 0, 0)
         self.crew_capacity_label = QLabel("0")
         layout.addWidget(self.crew_capacity_label, 0, 1)
 
         # Level
-        layout.addWidget(QLabel("<b>Nivel:</b>"), 1, 0)
+        layout.addWidget(QLabel("<b>Level:</b>"), 1, 0)
         self.crew_level_label = QLabel("0 ")
         layout.addWidget(self.crew_level_label, 1, 1)
 
         # Efficiency
-        layout.addWidget(QLabel("<b>Eficiencia:</b>"), 2, 0)
+        layout.addWidget(QLabel("<b>Efficiency:</b>"), 2, 0)
         self.crew_efficiency_label = QLabel("+0%")
         layout.addWidget(self.crew_efficiency_label, 2, 1)
 

@@ -19,36 +19,36 @@ class ShipInfoPanel(QWidget):
         layout = QVBoxLayout(self)
 
         # Main info group
-        info_group = QGroupBox("Información de la Nave")
+        info_group = QGroupBox("Ship Information")
         info_layout = QGridLayout()
 
         # Name
-        info_layout.addWidget(QLabel("<b>Nombre:</b>"), 0, 0)
+        info_layout.addWidget(QLabel("<b>Name:</b>"), 0, 0)
         self.name_label = QLabel("-")
         info_layout.addWidget(self.name_label, 0, 1)
 
         # Class
-        info_layout.addWidget(QLabel("<b>Clase:</b>"), 1, 0)
+        info_layout.addWidget(QLabel("<b>Class:</b>"), 1, 0)
         self.class_label = QLabel("-")
         info_layout.addWidget(self.class_label, 1, 1)
 
         # Type
-        info_layout.addWidget(QLabel("<b>Tipo:</b>"), 2, 0)
+        info_layout.addWidget(QLabel("<b>Type:</b>"), 2, 0)
         self.type_label = QLabel("-")
         info_layout.addWidget(self.type_label, 2, 1)
 
         # Size
-        info_layout.addWidget(QLabel("<b>Tamaño:</b>"), 3, 0)
+        info_layout.addWidget(QLabel("<b>Size:</b>"), 3, 0)
         self.size_label = QLabel("-")
         info_layout.addWidget(self.size_label, 3, 1)
 
         # Faction
-        info_layout.addWidget(QLabel("<b>Facción:</b>"), 4, 0)
+        info_layout.addWidget(QLabel("<b>Faction:</b>"), 4, 0)
         self.faction_label = QLabel("-")
         info_layout.addWidget(self.faction_label, 4, 1)
 
         # Price
-        info_layout.addWidget(QLabel("<b>Precio:</b>"), 5, 0)
+        info_layout.addWidget(QLabel("<b>Price:</b>"), 5, 0)
         self.price_label = QLabel("-")
         info_layout.addWidget(self.price_label, 5, 1)
 
@@ -56,7 +56,7 @@ class ShipInfoPanel(QWidget):
         layout.addWidget(info_group)
 
         # Description
-        desc_group = QGroupBox("Descripción")
+        desc_group = QGroupBox("Description")
         desc_layout = QVBoxLayout()
         self.description_label = QLabel("-")
         self.description_label.setWordWrap(True)
@@ -99,7 +99,7 @@ class ShipInfoPanel(QWidget):
             self.price_label.setText("-")
 
         # Description
-        self.description_label.setText(ship.description or "Sin descripción disponible")
+        self.description_label.setText(ship.description or "No description available")
 
     def _clear(self):
         """Clear all displayed information."""
