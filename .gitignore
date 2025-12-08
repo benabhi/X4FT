@@ -62,3 +62,7 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Temporary/junk files
+nul
+=6.6.0
