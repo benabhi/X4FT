@@ -21,7 +21,7 @@ import sys
 
 from x4ft.utils.game_detector import GameDetector
 from x4ft.utils.logger import get_logger
-from x4ft.config import X4FTConfig, Extension
+from x4ft.config import X4FTConfig, ExtensionConfig
 from x4ft.extraction import ExtractionManager
 
 logger = get_logger('gui.extraction_dialog')
@@ -382,9 +382,9 @@ class ExtractionDialog(QDialog):
         Returns:
             X4FTConfig object
         """
-        # Convert DLCs to Extension objects
+        # Convert DLCs to ExtensionConfig objects
         extensions = [
-            Extension(
+            ExtensionConfig(
                 id=dlc['id'],
                 name=dlc['name'],
                 path=Path(dlc['path']),
