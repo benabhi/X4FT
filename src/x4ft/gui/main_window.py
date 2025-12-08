@@ -15,6 +15,7 @@ from x4ft.config import X4FTConfig
 from x4ft.database.connection import DatabaseManager
 from x4ft.utils.logger import get_logger
 from x4ft.gui.extraction_dialog import ExtractionDialog
+from x4ft.gui.widgets import FittingMainWidget
 
 logger = get_logger('gui.main_window')
 
@@ -28,6 +29,8 @@ class MainWindow(QMainWindow):
         self.logger = logger
         self.config: X4FTConfig = None
         self.db_manager: DatabaseManager = None
+        self.fitting_widget: FittingMainWidget = None
+        self.welcome_widget: QWidget = None
 
         self._init_ui()
         self._check_initial_data()
@@ -40,12 +43,12 @@ class MainWindow(QMainWindow):
         # Create menu bar
         self._create_menu_bar()
 
-        # Create central widget
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
+        # Create welcome widget (initial view)
+        self.welcome_widget = QWidget()
+        self.setCentralWidget(self.welcome_widget)
 
         # Main layout
-        layout = QVBoxLayout(central_widget)
+        layout = QVBoxLayout(self.welcome_widget)
 
         # Welcome/Status section
         self._create_welcome_section(layout)
@@ -185,11 +188,22 @@ class MainWindow(QMainWindow):
         Args:
             ship_count: Number of ships in database
         """
-        self.data_status_label.setText(
-            f"<p style='color: green;'>✓ Base de datos cargada: {ship_count} naves disponibles</p>"
-        )
-        self.action_button.setText("Re-extraer Datos")
-        self.status_bar.showMessage(f"Datos cargados: {ship_count} naves")
+        # Create fitting widget if not exists
+        if not self.fitting_widget:
+            try:
+                with self.db_manager.get_session() as session:
+                    self.fitting_widget = FittingMainWidget(session)
+                    self.setCentralWidget(self.fitting_widget)
+                    self.status_bar.showMessage(f"Listo - {ship_count} naves disponibles")
+                    self.logger.info("Fitting interface loaded successfully")
+            except Exception as e:
+                self.logger.error(f"Error creating fitting widget: {e}", exc_info=True)
+                # Fall back to welcome screen
+                self.data_status_label.setText(
+                    f"<p style='color: orange;'>⚠ Error cargando interfaz: {e}</p>"
+                )
+        else:
+            self.status_bar.showMessage(f"Datos actualizados - {ship_count} naves disponibles")
 
     def _show_no_data_warning(self):
         """Show warning when no data is available."""
@@ -239,6 +253,8 @@ class MainWindow(QMainWindow):
     def _reload_database(self):
         """Reload database data."""
         self.logger.info("Reloading database...")
+        # Reset fitting widget to force recreation
+        self.fitting_widget = None
         self._check_initial_data()
         self.status_bar.showMessage("Base de datos recargada", 3000)
 
