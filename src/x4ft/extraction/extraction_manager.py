@@ -7,9 +7,10 @@ from datetime import datetime
 
 from ..config import X4FTConfig
 from ..database.connection import DatabaseManager
-from ..database.schema import Ship, ShipSlot, Equipment, WeaponStats, ShieldStats, EngineStats, ThrusterStats, Faction, Consumable, ExtractorMetadata
+from ..database.schema import Ship, ShipSlot, Equipment, WeaponStats, ShieldStats, EngineStats, ThrusterStats, Faction, Consumable, CrewType, EquipmentMod, EquipmentModBonus, ExtractorMetadata
 from .catalog_extractor import CatalogExtractor
 from .xml_diff_applicator import XMLDiffApplicator
+from .equipmentmods_parser import EquipmentModsParser
 from ..parsers.text_resolver import TextResolver
 from ..parsers.macro_index_parser import MacroIndexParser
 from ..parsers.wares_parser import WaresParser
@@ -678,6 +679,8 @@ class ExtractionManager:
                     consumable_type = 'drone'
                 elif 'countermeasure' in ware_id_lower or 'flare' in ware_id_lower:
                     consumable_type = 'countermeasure'
+                elif ware_id_lower == 'crew':
+                    consumable_type = 'crew'
 
                 # Skip if not a consumable
                 if consumable_type is None:
@@ -718,6 +721,119 @@ class ExtractionManager:
 
             session.flush()
             self.logger.info(f"Inserted {consumables_inserted} consumables")
+
+            # Insert crew types (6 skill levels with exponential pricing)
+            self.logger.info("Inserting crew types with skill levels...")
+
+            # Base prices from wares.xml for 0-star crew
+            base_min = 5000
+            base_avg = 7500
+            base_max = 10000
+
+            # Crew type definitions (based on web research)
+            crew_types_data = [
+                {
+                    'skill': 0,
+                    'name': 'Novice Crew',
+                    'desc': 'Inexperienced crew member with no stars. Cheapest option but requires training.',
+                    'multiplier': 1.0,
+                    'efficiency': 0.0
+                },
+                {
+                    'skill': 1,
+                    'name': 'Trained Crew',
+                    'desc': 'Crew member with basic training (1 star). Some experience in ship operations.',
+                    'multiplier': 10.0,
+                    'efficiency': 0.05
+                },
+                {
+                    'skill': 2,
+                    'name': 'Experienced Crew',
+                    'desc': 'Experienced crew member (2 stars). Competent in most ship operations.',
+                    'multiplier': 100.0,
+                    'efficiency': 0.10
+                },
+                {
+                    'skill': 3,
+                    'name': 'Veteran Crew',
+                    'desc': 'Veteran crew member (3 stars). Highly skilled and efficient.',
+                    'multiplier': 500.0,
+                    'efficiency': 0.20
+                },
+                {
+                    'skill': 4,
+                    'name': 'Expert Crew',
+                    'desc': 'Expert crew member (4 stars). Top-tier professional with exceptional skills.',
+                    'multiplier': 2000.0,
+                    'efficiency': 0.35
+                },
+                {
+                    'skill': 5,
+                    'name': 'Elite Crew',
+                    'desc': 'Elite crew member (5 stars). The best of the best, extremely rare and expensive.',
+                    'multiplier': 5000.0,
+                    'efficiency': 0.50
+                }
+            ]
+
+            for crew_data in crew_types_data:
+                crew_type = CrewType(
+                    skill_level=crew_data['skill'],
+                    name=crew_data['name'],
+                    description=crew_data['desc'],
+                    price_min=int(base_min * crew_data['multiplier']),
+                    price_avg=int(base_avg * crew_data['multiplier']),
+                    price_max=int(base_max * crew_data['multiplier']),
+                    efficiency_bonus=crew_data['efficiency'],
+                    training_time_reduction=crew_data['skill'] * 0.05  # 5% per star
+                )
+                session.add(crew_type)
+
+            session.flush()
+            self.logger.info(f"Inserted {len(crew_types_data)} crew types (skill levels 0-5)")
+
+            # ===== EQUIPMENT MODIFICATIONS =====
+            self.logger.info("Extracting and inserting equipment modifications...")
+
+            # Parse equipment mods (vanilla + DLC diffs)
+            mods_parser = EquipmentModsParser()
+            all_mods = mods_parser.parse_all_mods(self.config.extraction_path)
+
+            for mod_data in all_mods:
+                # Create EquipmentMod entry
+                equipment_mod = EquipmentMod(
+                    ware_id=mod_data.ware_id,
+                    name=mod_data.name,
+                    description=mod_data.description,
+                    mod_category=mod_data.mod_category,
+                    mod_type=mod_data.mod_type,
+                    quality=mod_data.quality,
+                    effect_stat=mod_data.effect_stat,
+                    effect_min=mod_data.effect_min,
+                    effect_max=mod_data.effect_max,
+                    requires_research=mod_data.requires_research,
+                    mk_level=mod_data.mk_level,
+                    source_dlc=mod_data.source_dlc
+                )
+                session.add(equipment_mod)
+                session.flush()  # Get the ID
+
+                # Add bonus effects
+                for bonus in mod_data.bonuses:
+                    mod_bonus = EquipmentModBonus(
+                        mod_id=equipment_mod.id,
+                        bonus_stat=bonus.stat,
+                        bonus_min=bonus.min_value,
+                        bonus_max=bonus.max_value,
+                        chance=bonus.chance,
+                        weight=bonus.weight,
+                        max_count=bonus.max_count,
+                        min_count=bonus.min_count
+                    )
+                    session.add(mod_bonus)
+
+            session.flush()
+            self.logger.info(f"Inserted {len(all_mods)} equipment modifications ({len(mods_parser.vanilla_mods)} vanilla + {len(mods_parser.dlc_mods)} DLC)")
 
     def _apply_xml_diffs(self) -> None:
         """Apply XML diffs from DLCs to base game files.

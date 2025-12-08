@@ -355,6 +355,33 @@ class ExtractorMetadata(Base):
         return f"<ExtractorMetadata(key='{self.key}', value='{self.value}')>"
 
 
+class CrewType(Base):
+    """Crew types with different skill levels and pricing.
+
+    Represents different experience levels of crew that can be hired.
+    Prices scale exponentially with skill level (0-5 stars).
+    """
+
+    __tablename__ = 'crew_types'
+
+    id = Column(Integer, primary_key=True)
+    skill_level = Column(Integer, nullable=False)  # 0-5 (stars)
+    name = Column(String(64), nullable=False)  # "Novice Crew", "Experienced Crew", etc.
+    description = Column(String(256))
+
+    # Pricing (scales exponentially with skill)
+    price_min = Column(Integer, default=0)
+    price_avg = Column(Integer, default=0)
+    price_max = Column(Integer, default=0)
+
+    # Modifiers for crew performance (future use)
+    efficiency_bonus = Column(Float, default=0.0)  # % bonus to ship operations
+    training_time_reduction = Column(Float, default=0.0)  # % faster skill gain
+
+    def __repr__(self):
+        return f"<CrewType(skill={self.skill_level}, name='{self.name}', avg_price={self.price_avg})>"
+
+
 class AppSettings(Base):
     """Application settings (configurable from GUI).
 
@@ -392,3 +419,80 @@ class AppSettings(Base):
             return json.loads(self.value)
         else:
             return self.value
+
+
+class EquipmentMod(Base):
+    """Equipment modifications (unlocked via research).
+
+    Modifications can be applied to ship equipment to enhance performance.
+    Examples: Engine thrust mods, weapon damage mods, shield capacity mods.
+    Obtained through research system at Player HQ.
+    """
+
+    __tablename__ = 'equipment_mods'
+
+    id = Column(Integer, primary_key=True)
+    ware_id = Column(String(128), unique=True, nullable=False)  # e.g., "mod_engine_thrust_mk1"
+    name = Column(String(256))
+    description = Column(Text)
+
+    # Modification classification
+    mod_category = Column(String(32), nullable=False)  # engine, weapon, turret, shield, chassis
+    mod_type = Column(String(64), nullable=False)  # damage, thrust, capacity, hull, etc.
+    quality = Column(Integer, default=1)  # 1=Basic, 2=Advanced, 3=Exceptional
+
+    # Primary effect (multiplier applied to base stat)
+    effect_stat = Column(String(64), nullable=False)  # What stat this modifies
+    effect_min = Column(Float, default=1.0)  # Minimum multiplier (e.g., 1.05 = +5%)
+    effect_max = Column(Float, default=1.0)  # Maximum multiplier (e.g., 1.15 = +15%)
+
+    # Research requirements
+    requires_research = Column(String(128))  # Research ID required to unlock
+    mk_level = Column(Integer, default=1)  # Mk1, Mk2, Mk3, etc.
+
+    # Pricing (if sold at stations)
+    price_min = Column(Integer, default=0)
+    price_avg = Column(Integer, default=0)
+    price_max = Column(Integer, default=0)
+
+    # Source tracking
+    source_dlc = Column(String(64))
+
+    # Relationships
+    bonus_effects = relationship("EquipmentModBonus", back_populates="mod", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"<EquipmentMod(ware='{self.ware_id}', type='{self.mod_type}', quality={self.quality})>"
+
+
+class EquipmentModBonus(Base):
+    """Additional bonus effects for equipment modifications.
+
+    Modifications can have multiple bonus effects beyond their primary effect.
+    Example: A damage mod might also provide cooling or reload speed bonuses.
+    Each bonus has a chance to appear and min/max value ranges.
+    """
+
+    __tablename__ = 'equipment_mod_bonuses'
+
+    id = Column(Integer, primary_key=True)
+    mod_id = Column(Integer, ForeignKey('equipment_mods.id'), nullable=False)
+
+    # Bonus effect
+    bonus_stat = Column(String(64), nullable=False)  # What stat this bonus affects
+    bonus_min = Column(Float, default=1.0)  # Minimum multiplier
+    bonus_max = Column(Float, default=1.0)  # Maximum multiplier
+
+    # Probability
+    chance = Column(Float, default=1.0)  # Probability this bonus appears (0.0-1.0)
+    weight = Column(Float, default=1.0)  # Weight for random selection
+
+    # Constraints
+    max_count = Column(Integer)  # Maximum number of this bonus type
+    min_count = Column(Integer)  # Minimum number of this bonus type
+
+    # Relationship
+    mod = relationship("EquipmentMod", back_populates="bonus_effects")
+
+    def __repr__(self):
+        return f"<EquipmentModBonus(stat='{self.bonus_stat}', min={self.bonus_min}, max={self.bonus_max})>"
