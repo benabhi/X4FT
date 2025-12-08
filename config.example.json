@@ -1,0 +1,59 @@
+{
+  "game_path": "D:\\Games\\steamapps\\common\\X4 Foundations",
+  "xrcattool_path": "C:\\Users\\Benabhi\\Desktop\\X4FT\\tools\\XTools_1.11\\XRCatTool.exe",
+  "extraction_path": "C:\\Users\\Benabhi\\Desktop\\X4FT\\data\\extracted",
+  "database_path": "C:\\Users\\Benabhi\\Desktop\\X4FT\\data\\x4ft.db",
+  "cleanup_after_extraction": false,
+  "logging": {
+    "level": "INFO",
+    "console_level": "INFO",
+    "file_level": "DEBUG",
+    "max_file_size_mb": 10,
+    "backup_count": 5,
+    "cleanup_days": 30
+  },
+  "extensions": [
+    {
+      "id": "ego_dlc_mini_01",
+      "name": "Bonus Content",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_mini_01",
+      "enabled": true,
+      "priority": 1
+    },
+    {
+      "id": "ego_dlc_split",
+      "name": "Split Vendetta",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_split",
+      "enabled": true,
+      "priority": 2
+    },
+    {
+      "id": "ego_dlc_terran",
+      "name": "Cradle of Humanity",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_terran",
+      "enabled": true,
+      "priority": 3
+    },
+    {
+      "id": "ego_dlc_pirate",
+      "name": "Tides of Avarice",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_pirate",
+      "enabled": true,
+      "priority": 4
+    },
+    {
+      "id": "ego_dlc_boron",
+      "name": "Kingdom End",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_boron",
+      "enabled": true,
+      "priority": 5
+    },
+    {
+      "id": "ego_dlc_timelines",
+      "name": "Timelines",
+      "path": "D:\\Games\\steamapps\\common\\X4 Foundations\\extensions\\ego_dlc_timelines",
+      "enabled": true,
+      "priority": 6
+    }
+  ]
+}

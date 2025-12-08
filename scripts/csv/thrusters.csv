@@ -1,0 +1,19 @@
+Macro Name,Name,Size,Mk Level,Description,Price Min,Price Avg,Price Max,Tags,Thrust Strafe,Thrust Pitch,Thrust Yaw,Thrust Roll
+thruster_gen_l_allround_01_mk1_macro,All-round Thrusters,l,1,No information available(No information available),253435,281595,309754,,1360.0,704.0,704.0,750.0
+thruster_gen_l_allround_01_mk2_macro,All-round Thrusters Mk2,l,2,No information available(No information available),1266139,1406821,1547503,,1632.0,859.0,859.0,915.0
+thruster_gen_l_allround_01_mk3_macro,All-round Thrusters Mk3,l,3,No information available(No information available),6328619,7031799,7734979,,1836.0,972.0,972.0,1035.0
+thruster_gen_m_allround_01_mk1_macro,All-round Thrusters,m,1,No information available(No information available),11717,13019,14321,,1010.0,240.0,240.0,380.0
+thruster_gen_m_combat_01_mk1_macro,Combat Thrusters,m,1,No information available(No information available),14899,16555,18210,,888.0,278.4,278.4,440.8
+thruster_gen_m_allround_01_mk2_macro,All-round Thrusters Mk2,m,2,No information available(No information available),58067,64519,70971,,1212.0,293.0,293.0,464.0
+thruster_gen_m_combat_01_mk2_macro,Combat Thrusters Mk2,m,2,No information available(No information available),73978,82198,90418,,1067.0,339.65,339.65,537.8
+thruster_gen_m_allround_01_mk3_macro,All-round Thrusters Mk3,m,3,No information available(No information available),289300,321445,353589,,1364.0,331.0,331.0,524.0
+thruster_gen_m_combat_01_mk3_macro,Combat Thrusters Mk3,m,3,No information available(No information available),368854,409838,450821,,1200.0,384.2,384.2,608.3
+thruster_gen_s_allround_01_mk1_macro,All-round Thrusters,s,1,No information available(No information available),5353,5948,6542,,400.0,160.0,160.0,200.0
+thruster_gen_s_combat_01_mk1_macro,Combat Thrusters,s,1,No information available(No information available),6241,6934,7628,,352.0,182.4,182.4,228.0
+thruster_gen_s_allround_01_mk2_macro,All-round Thrusters Mk2,s,2,No information available(No information available),83968,93298,102627,,480.0,184.0,184.0,230.0
+thruster_gen_s_combat_01_mk2_macro,Combat Thrusters Mk2,s,2,No information available(No information available),39752,44169,48586,,422.0,210.0,210.0,262.0
+thruster_gen_s_allround_01_mk3_macro,All-round Thrusters Mk3,s,3,No information available(No information available),199757,221952,244147,,540.0,200.0,200.0,250.0
+thruster_gen_s_combat_01_mk3_macro,Combat Thrusters Mk3,s,3,No information available(No information available),157946,175495,193045,,475.0,228.0,228.0,285.0
+thruster_gen_xl_allround_01_mk1_macro,All-round Thrusters,xl,1,No information available(No information available),538346,598162,657978,,2400.0,1360.0,1360.0,1240.0
+thruster_gen_xl_allround_01_mk2_macro,All-round Thrusters Mk2,xl,2,No information available(No information available),2690693,2989659,3288625,,2880.0,1659.0,1659.0,1513.0
+thruster_gen_xl_allround_01_mk3_macro,All-round Thrusters Mk3,xl,3,No information available(No information available),13451392,14945991,16440590,,3240.0,1877.0,1877.0,1711.0

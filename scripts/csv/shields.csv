@@ -1,0 +1,102 @@
+Macro Name,Name,Size,Mk Level,Description,Hull,Price Min,Price Avg,Price Max,Tags,Capacity,Recharge Rate,Recharge Delay
+shield_ter_l_standard_02_mk1_macro,Frontier Shield Generator,l,1,No information available(No information available),2000,104540,116156,127771,,40786,173.0,0.0
+shield_arg_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,42166,46851,51536,,38844,173.0,0.0
+shield_bor_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,41484,46612,51739,,40045,190.0,0.0
+shield_kha_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,0,0,0,,150000,140.0,0.0
+shield_par_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,42166,46851,51536,,34960,184.0,0.0
+shield_spl_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),3000,27782,45874,64068,,33018,140.0,0.0
+shield_tel_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,42166,46851,51536,,42729,166.0,0.0
+shield_ter_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,101270,112523,123775,,40786,173.0,0.0
+shield_xen_l_standard_01_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,41386,45984,50582,,36902,194.0,0.0
+shield_xen_l_standard_02_mk1_macro,Shield Generator,l,1,No information available(No information available),2000,41386,45984,50582,,40000,195.0,0.0
+shield_ter_l_standard_02_mk2_macro,Frontier Shield Generator Mk2,l,2,No information available(No information available),2000,494028,548920,603812,,48597,247.0,0.0
+shield_arg_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,205644,228494,251343,,46282,268.0,0.0
+shield_bor_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,206792,232351,257910,,47879,246.0,0.0
+shield_par_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,205644,228494,251343,,41654,284.0,0.0
+shield_spl_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),3000,136139,226085,316589,,39340,217.0,0.0
+shield_tel_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,205644,228494,251343,,50911,257.0,0.0
+shield_ter_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,493645,548494,603344,,48597,247.0,0.0
+shield_xen_l_standard_01_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,110765,123072,135379,,43968,300.0,0.0
+shield_xen_l_standard_02_mk2_macro,Shield Generator Mk2,l,2,No information available(No information available),2000,110765,123072,135379,,43968,300.0,0.0
+shield_ter_l_standard_02_mk3_macro,Frontier Shield Generator Mk3,l,3,No information available(No information available),2000,1294817,1523314,1751811,,69424,424.0,0.0
+shield_bor_l_standard_01_mk3_macro,Shield Generator Mk3,l,3,No information available(No information available),2000,1280548,1438818,1597088,,68399,422.0,0.0
+shield_ter_l_standard_01_mk3_macro,Shield Generator Mk3,l,3,No information available(No information available),2000,1295367,1523962,1752556,,69424,424.0,0.0
+shield_gen_m_yacht_01_mk1_macro,Astrid Shield Generator,m,1,No information available(No information available),0,52958,62304,71650,,50911,709.0,0.28
+shield_ter_m_standard_04_mk1_macro,Frontier Shield Generator,m,1,No information available(No information available),500,69473,86842,104210,,5405,29.0,0.47
+shield_arg_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12838,14264,15691,,5147,26.0,0.5
+shield_arg_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12838,14264,15691,,5147,26.0,0.5
+shield_bor_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),0,14990,16843,18696,,5197,31.0,0.43
+shield_bor_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,14990,16843,18696,,5197,31.0,0.43
+shield_kha_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),0,0,0,0,,4632,25.0,0.57
+shield_kha_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),0,0,0,0,,4632,25.0,0.57
+shield_kha_m_standard_03_mk1_macro,Shield Generator,m,1,No information available(No information available),2000,0,0,0,,4500,25.0,0.6
+shield_par_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12838,14264,15691,,4632,28.0,0.42
+shield_par_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12015,13350,14685,,4632,28.0,0.42
+shield_spl_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,8653,14227,19836,,4375,21.0,0.36
+shield_spl_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,8653,14227,19836,,4375,21.0,0.36
+shield_tel_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12838,14264,15691,,5662,25.0,0.57
+shield_tel_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,12015,13350,14685,,5662,25.0,0.57
+shield_ter_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,30852,34281,37709,,5405,29.0,0.47
+shield_ter_m_standard_02_mk1_macro,Shield Generator,m,1,No information available(No information available),500,30852,34281,37709,,5405,29.0,0.47
+shield_xen_m_standard_01_mk1_macro,Shield Generator,m,1,No information available(No information available),500,13478,14976,16474,,4890,29.0,0.55
+shield_xen_m_standard_04_mk1_macro,Shield Generator,m,1,No information available(No information available),500,13478,14976,16474,,4890,29.0,0.55
+shield_ter_m_standard_04_mk2_macro,Frontier Shield Generator Mk2,m,2,No information available(No information available),500,129373,161716,194059,,6439,45.0,0.47
+shield_arg_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,62115,69017,75918,,6133,41.0,0.5
+shield_arg_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,61597,68441,75285,,6133,41.0,0.5
+shield_bor_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),0,66812,75070,83327,,6214,40.0,0.4
+shield_bor_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,66812,75070,83327,,6214,40.0,0.4
+shield_par_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,62115,69017,75918,,5520,43.0,0.42
+shield_par_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,26058,28954,31849,,5520,43.0,0.42
+shield_spl_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,39644,65687,91930,,5213,33.0,0.36
+shield_spl_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,39644,65687,91930,,5213,33.0,0.36
+shield_tel_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,62115,69017,75918,,6746,39.0,0.57
+shield_tel_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,26058,28954,31849,,6746,39.0,0.57
+shield_ter_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,149164,165737,182311,,6439,45.0,0.47
+shield_ter_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,147892,164325,180757,,6439,45.0,0.47
+shield_xen_m_standard_01_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,27821,30912,34003,,5826,45.0,0.55
+shield_xen_m_standard_02_mk2_macro,Shield Generator Mk2,m,2,No information available(No information available),500,27821,30912,34003,,5826,45.0,0.55
+shield_ter_m_standard_04_mk3_macro,Frontier Shield Generator Mk3,m,3,No information available(No information available),500,566175,707718,849262,,9199,77.0,0.47
+shield_bor_m_standard_01_mk3_macro,Shield Generator Mk3,m,3,No information available(No information available),0,294801,331238,367674,,8877,68.0,0.33
+shield_bor_m_standard_02_mk3_macro,Shield Generator Mk3,m,3,No information available(No information available),500,294801,331238,367674,,8877,68.0,0.33
+shield_ter_m_standard_01_mk3_macro,Shield Generator Mk3,m,3,No information available(No information available),500,673420,792259,911098,,9199,77.0,0.47
+shield_ter_m_standard_02_mk3_macro,Shield Generator Mk3,m,3,No information available(No information available),500,673420,792259,911098,,9199,77.0,0.47
+shield_gen_s_racer_01_mk1_macro,Racing Shield Generator,s,1,No information available(No information available),0,13242,14713,16184,,827,82.0,12.1
+shield_arg_s_combattutorial_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,0,0,0,,1000,100.0,5.0
+shield_arg_s_racer_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,12223,13582,14939,,827,100.0,8.0
+shield_arg_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,1218,1354,1489,,827,82.0,12.1
+shield_bor_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,2236,2512,2789,,852,86.0,12.5
+shield_kha_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,0,0,0,,745,79.0,13.9
+shield_par_s_racer_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,12223,13582,14939,,1289,135.0,10.2
+shield_par_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,1218,1354,1489,,745,87.0,10.2
+shield_spl_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,929,1528,2132,,703,67.0,8.9
+shield_tel_s_racer_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,12223,13582,14939,,450,150.0,2.0
+shield_tel_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,1218,1354,1489,,910,79.0,13.9
+shield_ter_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,3014,3349,3684,,869,91.0,11.5
+shield_xen_s_standard_01_mk1_macro,Shield Generator,s,1,No information available(No information available),0,1901,2112,2323,,786,92.0,13.3
+shield_arg_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,10186,11318,12449,,988,128.0,12.1
+shield_bor_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,15706,17648,19589,,1019,134.0,9.6
+shield_par_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,10186,11318,12449,,889,135.0,10.2
+shield_spl_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,6658,11035,15447,,840,103.0,8.9
+shield_tel_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,10186,11318,12449,,1087,122.0,13.9
+shield_ter_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,24519,27243,29968,,1037,141.0,11.5
+shield_xen_s_standard_01_mk2_macro,Shield Generator Mk2,s,2,No information available(No information available),0,4579,5088,5597,,938,143.0,13.3
+shield_arg_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,49892,55436,60979,,1411,219.0,12.1
+shield_bor_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,74409,83606,92803,,1455,229.0,8.0
+shield_par_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,49892,55436,60979,,1270,232.0,10.2
+shield_spl_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,31475,52166,73051,,1200,177.0,8.9
+shield_tel_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,49892,55436,60979,,1552,210.0,13.9
+shield_ter_s_standard_01_mk3_macro,Shield Generator Mk3,s,3,No information available(No information available),0,119811,133124,146436,,1482,242.0,11.5
+shield_ter_s_xperimental_01_mk5_macro,Frontier Shield Generator Mk5,s,5,No information available(No information available),0,389810,458600,527390,,4102,643.0,11.5
+shield_pir_xl_battleship_01_standard_01_mk1_macro,Erlking Shield Generator,xl,1,No information available(No information available),8100,102082,120096,138110,,158600,662.0,0.0
+shield_arg_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,225671,250745,275820,,129481,492.0,0.0
+shield_bor_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,260362,292542,324722,,133766,517.0,0.0
+shield_kha_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),7000,0,0,0,,130000,550.0,0.0
+shield_par_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,225671,250745,275820,,116532,521.0,0.0
+shield_spl_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),9000,143572,238442,333746,,110058,398.0,0.0
+shield_tel_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,225671,250745,275820,,142429,470.0,0.0
+shield_ter_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,541710,601900,662091,,135955,544.0,0.0
+shield_xen_xl_standard_01_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,221493,246104,270714,,123007,550.0,0.0
+shield_xen_xl_standard_02_mk1_macro,Shield Generator,xl,1,No information available(No information available),6000,0,0,0,,125000,550.0,0.0
+shield_xen_xl_mothership_01_mk1_macro,Xenon Shield Generator,xl,1,No information available(No information available),25500,320048,385600,451152,,86060,200.0,0.0
+shield_bor_xl_standard_01_mk2_macro,Shield Generator Mk2,xl,2,No information available(No information available),6000,1805236,2028355,2251474,,159937,670.0,0.0
+shield_ter_xl_standard_01_mk2_macro,Shield Generator Mk2,xl,2,No information available(No information available),8000,3060534,3600629,4140723,,161988,842.0,0.0
