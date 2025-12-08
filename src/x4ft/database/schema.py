@@ -1,6 +1,6 @@
 """Database schema for X4FT using SQLAlchemy ORM."""
 
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table, Text
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table, Text, DateTime
 from sqlalchemy.orm import relationship, declarative_base
 import enum
 
@@ -496,3 +496,38 @@ class EquipmentModBonus(Base):
 
     def __repr__(self):
         return f"<EquipmentModBonus(stat='{self.bonus_stat}', min={self.bonus_min}, max={self.bonus_max})>"
+
+
+class Build(Base):
+    """Ship fitting build configuration.
+
+    Stores complete build configurations including equipment,
+    modifications, consumables, and crew settings.
+    """
+    __tablename__ = 'builds'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    description = Column(Text)
+
+    # Ship reference
+    ship_id = Column(Integer, ForeignKey('ships.id'), nullable=False)
+
+    # Timestamps
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+
+    # Configuration (stored as JSON)
+    equipment_config = Column(Text)  # JSON: {slot_name: equipment_id}
+    mods_config = Column(Text)  # JSON: {category: mod_id}
+    consumables_config = Column(Text)  # JSON: [{type, id, quantity}]
+    crew_level = Column(Integer, default=0)  # 0-5 stars
+
+    # Calculated stats snapshot (for quick comparison)
+    stats_snapshot = Column(Text)  # JSON: cached calculated stats
+
+    # Relationship
+    ship = relationship('Ship', backref='builds')
+
+    def __repr__(self):
+        return f"<Build(id={self.id}, name='{self.name}', ship_id={self.ship_id})>"
