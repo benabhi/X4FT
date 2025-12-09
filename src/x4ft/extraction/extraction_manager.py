@@ -24,6 +24,72 @@ from ..parsers.validation import should_exclude_ship, should_exclude_equipment
 from ..utils.logger import get_logger
 
 
+def extract_faction_prefix(equipment_name: str, ware_owners: list = None) -> str:
+    """Extract faction prefix from equipment name or ware owners.
+
+    X4 equipment follows naming convention: [FACTION] Equipment Name Size MkX
+    Examples: "ARG Shield M Mk1", "PAR Engine M Mk3", "TEL Beam Turret L Mk2"
+
+    Known faction prefixes:
+    - ARG: Argon Federation
+    - PAR: Paranid
+    - TEL: Teladi
+    - SPL: Split
+    - ANT: Antigone Republic
+    - HOP: Holy Order of the Pontifex
+    - TER: Terran
+    - XEN: Xenon (usually NPC-only)
+    - KHA: Kha'ak (usually NPC-only)
+
+    Args:
+        equipment_name: The equipment name (translated English)
+        ware_owners: List of faction IDs from wares.xml (fallback)
+
+    Returns:
+        Faction prefix string (e.g., "ARG", "PAR") or empty string if universal
+    """
+    if not equipment_name:
+        return ""
+
+    # Known faction prefixes
+    FACTION_PREFIXES = {
+        'ARG': 'argon',
+        'PAR': 'paranid',
+        'TEL': 'teladi',
+        'SPL': 'split',
+        'ANT': 'antigone',
+        'HOP': 'holyorder',
+        'TER': 'terran',
+        'XEN': 'xenon',
+        'KHA': 'khaak',
+        'PIO': 'pioneer',
+        'MIN': 'ministry',
+        'SEG': 'segaris',
+        'FAF': 'fallenfamilies',
+        'SCA': 'scaleplate',
+        'CUR': 'curatori',
+        'VIG': 'vigour',
+        'RAS': 'zyarth'
+    }
+
+    # Check if name starts with known prefix
+    name_upper = equipment_name.upper()
+    for prefix in FACTION_PREFIXES.keys():
+        if name_upper.startswith(prefix + ' ') or name_upper.startswith(prefix + '-'):
+            return prefix
+
+    # Fallback: Check ware owners list
+    if ware_owners:
+        for owner in ware_owners:
+            owner_lower = owner.lower()
+            for prefix, faction_id in FACTION_PREFIXES.items():
+                if faction_id in owner_lower:
+                    return prefix
+
+    # No faction prefix found (universal equipment)
+    return ""
+
+
 class ExtractionManager:
     """Orchestrates the complete data extraction pipeline."""
 
@@ -295,8 +361,11 @@ class ExtractionManager:
             thrusters: List of ThrusterData objects
         """
         with self.db_manager.get_session() as session:
-            # Create wares price lookup dictionary (by component_ref / macro_name)
+            # Create wares lookup dictionaries (by component_ref / macro_name)
             wares_prices = {}
+            wares_owners = {}  # For faction prefix extraction
+            wares_by_id = {}  # For software extraction
+
             for ware in wares:
                 if ware.component_ref:
                     wares_prices[ware.component_ref] = {
@@ -304,7 +373,12 @@ class ExtractionManager:
                         'avg': ware.price_avg,
                         'max': ware.price_max
                     }
-            self.logger.info(f"Built price lookup for {len(wares_prices)} wares")
+                    wares_owners[ware.component_ref] = ware.owners
+
+                # Also index by ware_id for direct lookups
+                wares_by_id[ware.id] = ware
+
+            self.logger.info(f"Built price/owner lookup for {len(wares_prices)} wares")
 
             # Insert ships with ALL attributes (filter out invalid ships)
             self.logger.info(f"Filtering and inserting {len(ships)} ships into database...")
@@ -434,8 +508,12 @@ class ExtractionManager:
                     weapons_excluded += 1
                     continue
 
-                # Get prices from wares if available
+                # Get prices and owners from wares if available
                 prices = wares_prices.get(weapon_data.macro_name, {'min': 0, 'avg': 0, 'max': 0})
+                owners = wares_owners.get(weapon_data.macro_name, [])
+
+                # Extract faction prefix
+                faction_prefix = extract_faction_prefix(weapon_data.name, owners)
 
                 equipment = Equipment(
                     macro_name=weapon_data.macro_name,
@@ -444,6 +522,7 @@ class ExtractionManager:
                     equipment_type=weapon_data.equipment_type,
                     size=weapon_data.size,
                     mk_level=weapon_data.mk_level,
+                    faction_prefix=faction_prefix,
                     hull=weapon_data.hull,
                     tags=weapon_data.tags,
                     price_min=prices['min'],
@@ -514,8 +593,12 @@ class ExtractionManager:
                     shields_excluded += 1
                     continue
 
-                # Get prices from wares if available
+                # Get prices and owners from wares if available
                 prices = wares_prices.get(shield_data.macro_name, {'min': 0, 'avg': 0, 'max': 0})
+                owners = wares_owners.get(shield_data.macro_name, [])
+
+                # Extract faction prefix
+                faction_prefix = extract_faction_prefix(shield_data.name, owners)
 
                 equipment = Equipment(
                     macro_name=shield_data.macro_name,
@@ -524,6 +607,7 @@ class ExtractionManager:
                     equipment_type="shield",
                     size=shield_data.size,
                     mk_level=shield_data.mk_level,
+                    faction_prefix=faction_prefix,
                     hull=shield_data.hull,
                     tags=shield_data.tags,
                     price_min=prices['min'],
@@ -565,8 +649,12 @@ class ExtractionManager:
                     engines_excluded += 1
                     continue
 
-                # Get prices from wares if available
+                # Get prices and owners from wares if available
                 prices = wares_prices.get(engine_data.macro_name, {'min': 0, 'avg': 0, 'max': 0})
+                owners = wares_owners.get(engine_data.macro_name, [])
+
+                # Extract faction prefix
+                faction_prefix = extract_faction_prefix(engine_data.name, owners)
 
                 equipment = Equipment(
                     macro_name=engine_data.macro_name,
@@ -575,6 +663,7 @@ class ExtractionManager:
                     equipment_type="engine",
                     size=engine_data.size,
                     mk_level=engine_data.mk_level,
+                    faction_prefix=faction_prefix,
                     tags=engine_data.tags,
                     price_min=prices['min'],
                     price_avg=prices['avg'],
@@ -621,8 +710,12 @@ class ExtractionManager:
                     thrusters_excluded += 1
                     continue
 
-                # Get prices from wares if available
+                # Get prices and owners from wares if available
                 prices = wares_prices.get(thruster_data.macro_name, {'min': 0, 'avg': 0, 'max': 0})
+                owners = wares_owners.get(thruster_data.macro_name, [])
+
+                # Extract faction prefix
+                faction_prefix = extract_faction_prefix(thruster_data.name, owners)
 
                 equipment = Equipment(
                     macro_name=thruster_data.macro_name,
@@ -631,6 +724,7 @@ class ExtractionManager:
                     equipment_type="thruster",
                     size=thruster_data.size,
                     mk_level=thruster_data.mk_level,
+                    faction_prefix=faction_prefix,
                     tags=thruster_data.tags,
                     price_min=prices['min'],
                     price_avg=prices['avg'],
@@ -659,6 +753,50 @@ class ExtractionManager:
 
             session.flush()
             self.logger.info(f"Inserted {thruster_stats_count} thruster stats")
+
+            # Insert software (extracted from wares with 'software' tag)
+            self.logger.info(f"Extracting and inserting software from {len(wares)} wares...")
+            software_inserted = 0
+
+            for ware in wares:
+                # Check if ware has 'software' tag
+                if ware.ware_type != 'software':
+                    continue
+
+                # Extract Mk level from name
+                mk_level = 1
+                ware_name_lower = ware.name.lower()
+                if 'mk1' in ware_name_lower or 'mk 1' in ware_name_lower:
+                    mk_level = 1
+                elif 'mk2' in ware_name_lower or 'mk 2' in ware_name_lower:
+                    mk_level = 2
+                elif 'mk3' in ware_name_lower or 'mk 3' in ware_name_lower:
+                    mk_level = 3
+
+                # Extract faction prefix
+                faction_prefix = extract_faction_prefix(ware.name, ware.owners)
+
+                # Create software equipment entry
+                equipment = Equipment(
+                    macro_name=ware.component_ref if ware.component_ref else ware.id,
+                    ware_id=ware.id,
+                    name=ware.name,
+                    description=ware.description,
+                    equipment_type="software",
+                    size="",  # Software doesn't have size
+                    mk_level=mk_level,
+                    faction_prefix=faction_prefix,
+                    hull=0,
+                    tags=','.join(ware.tags) if ware.tags else "",
+                    price_min=ware.price_min,
+                    price_avg=ware.price_avg,
+                    price_max=ware.price_max
+                )
+                session.add(equipment)
+                software_inserted += 1
+
+            session.flush()
+            self.logger.info(f"Inserted {software_inserted} software modules")
 
             # Insert consumables (extracted from wares)
             self.logger.info(f"Extracting and inserting consumables from {len(wares)} wares...")

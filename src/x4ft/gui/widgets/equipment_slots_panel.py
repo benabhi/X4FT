@@ -113,9 +113,26 @@ class EquipmentSlotsPanel(QWidget):
             # Load compatible equipment
             compatible_equipment = self._get_compatible_equipment(slot)
             for eq in compatible_equipment:
-                label = eq.name
-                if eq.mk_level:
-                    label += f" Mk{eq.mk_level}"
+                # Format: [FACTION] Name Size MkX - Price
+                # Example: "PAR Shield M Mk3 - 50,000 Cr"
+                label_parts = []
+
+                # Add faction prefix if present
+                if eq.faction_prefix:
+                    label_parts.append(eq.faction_prefix)
+
+                # Add equipment name
+                label_parts.append(eq.name)
+
+                # Add size if present
+                if eq.size:
+                    label_parts.append(eq.size.upper())
+
+                # Add Mk level if present
+                if eq.mk_level and eq.mk_level > 1:
+                    label_parts.append(f"Mk{eq.mk_level}")
+
+                label = " ".join(label_parts)
 
                 # Add price to label
                 price = eq.price_avg or 0

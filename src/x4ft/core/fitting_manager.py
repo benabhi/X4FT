@@ -506,17 +506,12 @@ class FittingManager:
         Returns:
             True if compatible
         """
-        # Check ship size compatibility (XS ships can only use XS equipment, etc.)
-        if self.current_ship and self.current_ship.size and equipment.size:
-            ship_size = self.current_ship.size.lower()
-            equipment_size = equipment.size.lower()
-            if ship_size != equipment_size:
-                self.logger.debug(f"Size mismatch: ship={ship_size}, equipment={equipment_size}")
-                return False
-
-        # Check slot size compatibility
+        # Check slot size compatibility (equipment size must match slot size)
+        # NOTE: Ship size is IRRELEVANT - slots determine compatibility
+        # A medium ship can have small, medium, and large slots
         if slot.slot_size and equipment.size:
-            if slot.slot_size != equipment.size:
+            if slot.slot_size.lower() != equipment.size.lower():
+                self.logger.debug(f"Slot size mismatch: slot={slot.slot_size}, equipment={equipment.size}")
                 return False
 
         # Check type compatibility

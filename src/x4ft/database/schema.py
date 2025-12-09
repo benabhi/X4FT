@@ -172,9 +172,10 @@ class Equipment(Base):
     name = Column(String(256))
     description = Column(Text)
 
-    equipment_type = Column(String(32), nullable=False)  # weapon, turret, shield, engine, thruster, missile
+    equipment_type = Column(String(32), nullable=False)  # weapon, turret, shield, engine, thruster, missile, software
     size = Column(String(8))  # xs, s, m, l, xl
     mk_level = Column(Integer, default=1)  # Mk1, Mk2, Mk3
+    faction_prefix = Column(String(16))  # ARG, PAR, TEL, etc. (None for universal equipment)
 
     # Generic stats
     hull = Column(Integer, default=0)
