@@ -11,6 +11,7 @@ from x4ft.gui.widgets.ship_list_widget import ShipListWidget
 from x4ft.gui.widgets.ship_info_panel import ShipInfoPanel
 from x4ft.gui.widgets.equipment_slots_panel import EquipmentSlotsPanel
 from x4ft.gui.widgets.modifications_panel import ModificationsPanel
+from x4ft.gui.widgets.software_panel import SoftwarePanel
 from x4ft.gui.widgets.crew_panel import CrewPanel
 from x4ft.gui.widgets.consumables_panel import ConsumablesPanel
 from x4ft.gui.widgets.stats_panel import StatsPanel
@@ -80,7 +81,11 @@ class FittingMainWidget(QWidget):
         self.modifications_panel = ModificationsPanel(self.session)
         self.tabs.addTab(self.modifications_panel, "Modifications")
 
-        # Tab 4: Crew & Consumables (with scroll area)
+        # Tab 4: Software
+        self.software_panel = SoftwarePanel(self.session)
+        self.tabs.addTab(self.software_panel, "Software")
+
+        # Tab 5: Crew & Consumables (with scroll area)
         from PyQt6.QtWidgets import QScrollArea
         crew_consumables_scroll = QScrollArea()
         crew_consumables_scroll.setWidgetResizable(True)
@@ -100,7 +105,7 @@ class FittingMainWidget(QWidget):
         crew_consumables_scroll.setWidget(crew_consumables_widget)
         self.tabs.addTab(crew_consumables_scroll, "Crew & Consumables")
 
-        # Tab 5: Cost
+        # Tab 6: Cost
         self.cost_panel = CostPanel()
         self.tabs.addTab(self.cost_panel, "Cost Breakdown")
 
@@ -139,6 +144,9 @@ class FittingMainWidget(QWidget):
         # Modifications changes
         self.modifications_panel.mod_changed.connect(self._on_mod_changed)
 
+        # Software changes
+        self.software_panel.software_changed.connect(self._on_software_changed)
+
         # Crew changes
         self.crew_panel.crew_changed.connect(self._on_crew_changed)
 
@@ -166,6 +174,7 @@ class FittingMainWidget(QWidget):
             # Update panels
             self.ship_info_panel.set_ship(ship)
             self.equipment_panel.set_ship(ship)
+            self.software_panel.clear()  # Reset software
             self.crew_panel.set_capacity(ship.crew_capacity or 0)
             self.crew_panel.set_crew(0, 0)  # Reset crew
             self.consumables_panel.clear()
@@ -223,6 +232,15 @@ class FittingMainWidget(QWidget):
         except Exception as e:
             logger.error(f"Error changing modification: {e}", exc_info=True)
 
+    def _on_software_changed(self):
+        """Handle software change."""
+        try:
+            # Update costs (software changes affect cost but not stats)
+            self._update_costs()
+
+        except Exception as e:
+            logger.error(f"Error changing software: {e}", exc_info=True)
+
     def _on_crew_changed(self, crew_type_id: int, quantity: int):
         """Handle crew change.
 
@@ -279,6 +297,11 @@ class FittingMainWidget(QWidget):
                 'unit_cost': crew_info.get('unit_cost', 0)
             }
 
+            # Software costs
+            software_info = self.software_panel.get_software_info()
+            software_cost = software_info.get('total_cost', 0)
+            software_details = software_info.get('items', [])
+
             # Consumables costs
             consumables_info = self.consumables_panel.get_consumables_info()
             consumables_cost = consumables_info.get('total_cost', 0)
@@ -296,11 +319,13 @@ class FittingMainWidget(QWidget):
                 'ship_cost': ship_cost,
                 'ship_name': self.current_ship.name,
                 'equipment_costs': equipment_costs,
+                'software_cost': software_cost,
+                'software_details': software_details,
                 'crew_cost': crew_cost,
                 'crew_details': crew_details,
                 'consumables_cost': consumables_cost,
                 'consumables_details': consumables_details,
-                'total': ship_cost + sum(e['cost'] for e in equipment_costs) + crew_cost + consumables_cost
+                'total': ship_cost + sum(e['cost'] for e in equipment_costs) + software_cost + crew_cost + consumables_cost
             }
 
             self.cost_panel.update_costs(cost_breakdown)

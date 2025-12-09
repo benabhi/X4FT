@@ -53,6 +53,8 @@ class CostPanel(QWidget):
                 - ship_cost: Base ship cost
                 - ship_name: Ship name
                 - equipment_costs: List of {name, cost}
+                - software_cost: Total software cost
+                - software_details: List of {name, cost}
                 - crew_cost: Total crew cost
                 - crew_details: {type, quantity, unit_cost}
                 - consumables_cost: Total consumables cost
@@ -97,6 +99,23 @@ class CostPanel(QWidget):
             equipment_parent.setForeground(1, Qt.GlobalColor.darkGreen)
             self.cost_tree.addTopLevelItem(equipment_parent)
             total += equipment_subtotal
+
+        # Software costs
+        software_cost = cost_breakdown.get('software_cost', 0)
+        software_details = cost_breakdown.get('software_details', [])
+        if software_cost > 0:
+            software_parent = QTreeWidgetItem(["Software", self._format_cost(software_cost)])
+            software_parent.setForeground(1, Qt.GlobalColor.darkYellow)
+            software_parent.setExpanded(True)
+
+            for item in software_details:
+                name = item.get('name', 'Unknown')
+                cost = item.get('cost', 0)
+                child = QTreeWidgetItem([name, self._format_cost(cost)])
+                software_parent.addChild(child)
+
+            self.cost_tree.addTopLevelItem(software_parent)
+            total += software_cost
 
         # Crew cost
         crew_cost = cost_breakdown.get('crew_cost', 0)
