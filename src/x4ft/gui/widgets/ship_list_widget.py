@@ -67,11 +67,23 @@ class ShipListWidget(QWidget):
     def _load_ships(self):
         """Load ships from database."""
         try:
-            self.ships = self.session.query(Ship).order_by(Ship.name).all()
+            # Load ships and immediately extract needed data to avoid session issues
+            ships_query = self.session.query(Ship).order_by(Ship.name).all()
 
-            # Populate type filter
+            # Convert to dict to avoid session detachment issues
+            self.ships = []
             types = set()
-            for ship in self.ships:
+
+            for ship in ships_query:
+                # Extract data while still in session
+                ship_data = {
+                    'id': ship.id,
+                    'name': ship.name,
+                    'size': ship.size,
+                    'ship_type': ship.ship_type
+                }
+                self.ships.append(ship_data)
+
                 if ship.ship_type:
                     types.add(ship.ship_type.title())
 
@@ -85,37 +97,51 @@ class ShipListWidget(QWidget):
 
     def _filter_ships(self):
         """Filter and display ships based on current filters."""
-        self.ship_list.clear()
+        try:
+            self.ship_list.clear()
 
-        search_text = self.search_edit.text().lower()
-        size_filter = self.size_combo.currentText()
-        type_filter = self.type_combo.currentText()
+            search_text = self.search_edit.text().lower()
+            size_filter = self.size_combo.currentText()
+            type_filter = self.type_combo.currentText()
 
-        for ship in self.ships:
-            # Apply filters
-            if search_text and search_text not in ship.name.lower():
-                continue
-
-            if size_filter != "All" and ship.size.upper() != size_filter:
-                continue
-
-            if type_filter != "All":
-                if not ship.ship_type or ship.ship_type.title() != type_filter:
+            for ship in self.ships:
+                # Skip ships without name
+                if not ship['name']:
                     continue
 
-            # Add to list
-            item_text = f"{ship.name}"
-            if ship.ship_type:
-                item_text += f" ({ship.ship_type.title()})"
+                # Apply filters
+                if search_text and search_text not in ship['name'].lower():
+                    continue
 
-            item = QListWidgetItem(item_text)
-            item.setData(256, ship.id)  # Store ship ID
-            self.ship_list.addItem(item)
+                if size_filter != "All":
+                    if not ship['size'] or ship['size'].upper() != size_filter:
+                        continue
+
+                if type_filter != "All":
+                    if not ship['ship_type'] or ship['ship_type'].title() != type_filter:
+                        continue
+
+                # Add to list
+                item_text = f"{ship['name']}"
+                if ship['ship_type']:
+                    item_text += f" ({ship['ship_type'].title()})"
+
+                item = QListWidgetItem(item_text)
+                item.setData(256, ship['id'])  # Store ship ID
+
+                self.ship_list.addItem(item)
+
+        except Exception as e:
+            logger.error(f"Error filtering ships: {e}", exc_info=True)
 
     def _on_ship_clicked(self, item: QListWidgetItem):
         """Handle ship selection."""
+        if not item:
+            return
+
         ship_id = item.data(256)
-        self.ship_selected.emit(ship_id)
+        if ship_id:
+            self.ship_selected.emit(ship_id)
 
     def get_selected_ship_id(self) -> int:
         """Get currently selected ship ID."""

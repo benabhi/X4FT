@@ -142,7 +142,11 @@ class ExtractionManager:
         for cat in catalogs:
             self.logger.debug(f"  - {cat.name}")
 
-        return self.extractor.extract_xml_only(catalogs)
+        # Extract XMLs
+        if not self.extractor.extract_xml_only(catalogs):
+            return False
+
+        return True
 
     def _parse_indexes(self) -> tuple:
         """Parse macro and component indexes.

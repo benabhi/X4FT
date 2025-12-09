@@ -135,6 +135,7 @@ class CatalogExtractor:
 
         return self.extract(input_paths, include, exclude)
 
+
     def extract_specific_file(self, input_paths: List[Path], file_path: str, output_dir: Path) -> bool:
         """Extract a specific file from catalogs.
 
