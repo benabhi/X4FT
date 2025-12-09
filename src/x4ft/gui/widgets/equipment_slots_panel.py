@@ -117,9 +117,11 @@ class EquipmentSlotsPanel(QWidget):
                 # Example: "PAR Shield M Mk3 - 50,000 Cr"
                 label_parts = []
 
-                # Add faction prefix if present
+                # Add faction prefix if present (map HOP to PAR for display)
+                # HOP (Holy Order Pontifex) is a Paranid subfaction, shown as PAR in-game
                 if eq.faction_prefix:
-                    label_parts.append(eq.faction_prefix)
+                    display_faction = 'PAR' if eq.faction_prefix == 'HOP' else eq.faction_prefix
+                    label_parts.append(display_faction)
 
                 # Add equipment name
                 label_parts.append(eq.name)

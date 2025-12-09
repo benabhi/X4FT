@@ -483,6 +483,10 @@ class FittingManager:
 
         Formula from X4 Wiki: Speed = thrust / drag
         Mass affects acceleration, not top speed.
+
+        IMPORTANT: boost_thrust and travel_thrust are MULTIPLIERS, not absolute values.
+        - Boost speed = (forward_thrust × boost_multiplier) / drag
+        - Travel speed = (forward_thrust × travel_multiplier) / drag
         """
         # Using forward drag as baseline
         drag = ship.forward_drag or 0.01  # Avoid division by zero
@@ -490,11 +494,12 @@ class FittingManager:
         if stats['forward_thrust'] > 0:
             stats['velocity'] = stats['forward_thrust'] / drag
 
-        if stats['boost_thrust'] > 0:
-            stats['boost_velocity'] = stats['boost_thrust'] / drag
+        # Boost and travel use multipliers of forward thrust
+        if stats['boost_thrust'] > 0 and stats['forward_thrust'] > 0:
+            stats['boost_velocity'] = (stats['forward_thrust'] * stats['boost_thrust']) / drag
 
-        if stats['travel_thrust'] > 0:
-            stats['travel_velocity'] = stats['travel_thrust'] / drag
+        if stats['travel_thrust'] > 0 and stats['forward_thrust'] > 0:
+            stats['travel_velocity'] = (stats['forward_thrust'] * stats['travel_thrust']) / drag
 
     def _is_equipment_compatible(self, slot: ShipSlot, equipment: Equipment) -> bool:
         """Check if equipment is compatible with slot.
