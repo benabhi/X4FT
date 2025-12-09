@@ -52,6 +52,7 @@ class StatsPanel(QWidget):
 
         # Main layout
         main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.addWidget(scroll)
 
     def _create_defense_group(self) -> QGroupBox:
@@ -111,6 +112,12 @@ class StatsPanel(QWidget):
         layout.addWidget(QLabel("<b>Strafe Thrust:</b>"), 4, 0)
         self.strafe_thrust_label = QLabel("0 N")
         layout.addWidget(self.strafe_thrust_label, 4, 1)
+
+        # Info message
+        self.propulsion_info = QLabel("<i>💡 Equip an engine and thrusters to see velocity stats</i>")
+        self.propulsion_info.setWordWrap(True)
+        self.propulsion_info.setStyleSheet("color: #666; padding: 5px;")
+        layout.addWidget(self.propulsion_info, 5, 0, 1, 2)
 
         group.setLayout(layout)
         return group
@@ -233,6 +240,10 @@ class StatsPanel(QWidget):
 
         strafe = stats.get('strafe_thrust', 0)
         self.strafe_thrust_label.setText(f"{strafe:,.0f} N")
+
+        # Show/hide propulsion info message
+        has_propulsion = vel > 0 or fwd_thrust > 0
+        self.propulsion_info.setVisible(not has_propulsion)
 
         # Armament
         dps_hull = stats.get('dps_hull_total', 0)

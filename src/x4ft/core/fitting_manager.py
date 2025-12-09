@@ -479,23 +479,22 @@ class FittingManager:
         stats['travel_thrust'] *= bonus
 
     def _calculate_velocities(self, stats: Dict, ship: Ship):
-        """Calculate velocity from thrust and mass/drag."""
-        if not ship.mass or ship.mass == 0:
-            return
+        """Calculate velocity from thrust and drag.
 
-        # Simplified velocity calculation: thrust / (drag * mass)
+        Formula from X4 Wiki: Speed = thrust / drag
+        Mass affects acceleration, not top speed.
+        """
         # Using forward drag as baseline
         drag = ship.forward_drag or 0.01  # Avoid division by zero
-        mass = ship.mass
 
         if stats['forward_thrust'] > 0:
-            stats['velocity'] = stats['forward_thrust'] / (drag * mass)
+            stats['velocity'] = stats['forward_thrust'] / drag
 
         if stats['boost_thrust'] > 0:
-            stats['boost_velocity'] = stats['boost_thrust'] / (drag * mass)
+            stats['boost_velocity'] = stats['boost_thrust'] / drag
 
         if stats['travel_thrust'] > 0:
-            stats['travel_velocity'] = stats['travel_thrust'] / (drag * mass)
+            stats['travel_velocity'] = stats['travel_thrust'] / drag
 
     def _is_equipment_compatible(self, slot: ShipSlot, equipment: Equipment) -> bool:
         """Check if equipment is compatible with slot.
@@ -507,7 +506,15 @@ class FittingManager:
         Returns:
             True if compatible
         """
-        # Check size compatibility
+        # Check ship size compatibility (XS ships can only use XS equipment, etc.)
+        if self.current_ship and self.current_ship.size and equipment.size:
+            ship_size = self.current_ship.size.lower()
+            equipment_size = equipment.size.lower()
+            if ship_size != equipment_size:
+                self.logger.debug(f"Size mismatch: ship={ship_size}, equipment={equipment_size}")
+                return False
+
+        # Check slot size compatibility
         if slot.slot_size and equipment.size:
             if slot.slot_size != equipment.size:
                 return False

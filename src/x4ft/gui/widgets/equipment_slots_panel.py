@@ -116,6 +116,11 @@ class EquipmentSlotsPanel(QWidget):
                 label = eq.name
                 if eq.mk_level:
                     label += f" Mk{eq.mk_level}"
+
+                # Add price to label
+                price = eq.price_avg or 0
+                label += f" - {price:,.0f} Cr"
+
                 combo.addItem(label, eq.id)
 
             # Connect signal
@@ -156,9 +161,12 @@ class EquipmentSlotsPanel(QWidget):
                 else:
                     query = query.filter(Equipment.equipment_type == slot.slot_type)
 
-            # Filter by size if specified
+            # Filter by slot size (equipment must match slot size)
+            # Each slot has a specific size (S, M, L, XL) and only accepts matching equipment
             if slot.slot_size:
-                query = query.filter(Equipment.size == slot.slot_size)
+                slot_size = slot.slot_size.lower()  # Use lowercase to match DB
+                query = query.filter(Equipment.size == slot_size)
+                logger.debug(f"Filtering equipment for slot size: {slot_size}")
 
             return query.order_by(Equipment.name).all()
 
@@ -204,6 +212,28 @@ class EquipmentSlotsPanel(QWidget):
             if equipment_id:
                 config[slot_name] = equipment_id
         return config
+
+    def get_equipment_costs(self) -> List[Dict]:
+        """Get list of equipment with costs for cost breakdown.
+
+        Returns:
+            List of dicts with: slot, name, cost
+        """
+        costs = []
+        for slot_name, combo in self.slot_combos.items():
+            equipment_id = combo.currentData()
+            if equipment_id:
+                equipment = self.session.query(Equipment).filter_by(id=equipment_id).first()
+                if equipment:
+                    name = equipment.name
+                    if equipment.mk_level:
+                        name += f" Mk{equipment.mk_level}"
+                    costs.append({
+                        'slot': slot_name,
+                        'name': name,
+                        'cost': equipment.price_avg or 0
+                    })
+        return costs
 
     def clear(self):
         """Clear all equipment selections."""

@@ -98,8 +98,11 @@ class ShipInfoPanel(QWidget):
         else:
             self.price_label.setText("-")
 
-        # Description
-        self.description_label.setText(ship.description or "No description available")
+        # Description (convert \n to HTML line breaks)
+        description = ship.description or "No description available"
+        # Replace literal \n with actual line breaks, then convert to HTML
+        description = description.replace('\\n', '\n').replace('\n', '<br>')
+        self.description_label.setText(description)
 
     def _clear(self):
         """Clear all displayed information."""
